@@ -12,4 +12,15 @@ class Game
     @player = nil
     @history = []
   end
+
+  def deal_card(dealer)
+    dealer.hand << deck.draw
+  end
+
+  def deal_natural
+    2.times do
+      deal_card(punto)
+      deal_card(banko)
+    end
+  end
 end

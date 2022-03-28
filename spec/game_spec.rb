@@ -2,6 +2,9 @@ require './lib/game'
 
 describe Game do
   subject(:game) { Game.new }
+  subject(:punto) { game.punto }
+  subject(:banko) { game.banko }
+  subject(:deck) { game.deck }
   it 'can be instantiated' do
     expect(game).not_to be_nil
     expect(game).to be_an_instance_of Game
@@ -17,7 +20,6 @@ describe Game do
 
     describe '#punto' do
       it 'returns a Dealer object' do
-        punto = Dealer.new
         expect(punto).not_to be_nil
         expect(punto).to be_an_instance_of Dealer
       end
@@ -25,7 +27,6 @@ describe Game do
 
     describe '#banko' do
       it 'returns a Dealer object' do
-        banko = Dealer.new
         expect(banko).not_to be_nil
         expect(banko).to be_an_instance_of Dealer
       end
@@ -41,6 +42,23 @@ describe Game do
       it 'returns empty array' do
         expect(game.history).to eq([])
       end
+    end
+  end
+
+  describe '#deal_card' do
+    it 'deals card to punto/banko' do
+      game.deal_card(punto)
+      expect(punto.hand.length).to eq(1)
+      expect(deck.cards.length).to eq(415)
+    end
+  end
+
+  describe '#deal_natural' do
+    it 'deals 2 cards each to punto and banko' do
+      game.deal_natural
+      expect(punto.hand.length).to eq(2)
+      expect(banko.hand.length).to eq(2)
+      expect(deck.cards.length).to eq(412)
     end
   end
 end
