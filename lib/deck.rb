@@ -10,6 +10,18 @@ class Deck
     @cards = SUITS.map { |suit| build(suit, num_decks) }.flatten.shuffle
   end
 
+  def draw
+    @cards.pop
+  end
+
+  def shuffle
+    @cards.shuffle!
+  end
+
+  def cut
+    @cards.rotate! rand((0.35 * @cards.length).floor..(0.65 * @cards.length).floor)
+  end
+
   # build a set of 13 cards of a particular suit
   # map each value from 1-13 with that suit
   # can build any number of sets, default set to 1
