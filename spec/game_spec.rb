@@ -61,4 +61,17 @@ describe Game do
       expect(deck.cards.length).to eq(412)
     end
   end
+
+  describe '#calc_score' do
+    it 'returns correct score with 2 cards' do
+      expect(game.calc_score([Card.new(1, :spades), Card.new(8, :spades)])).to eq(9)
+      expect(game.calc_score([Card.new(12, :spades), Card.new(7, :spades)])).to eq(7)
+      expect(game.calc_score([Card.new(13, :spades), Card.new(13, :spades)])).to eq(0)
+    end
+    it 'returns correct score with 3 cards' do
+      expect(game.calc_score([Card.new(1, :spades), Card.new(7, :spades), Card.new(1, :spades)])).to eq(9)
+      expect(game.calc_score([Card.new(10, :spades), Card.new(11, :spades), Card.new(6, :spades)])).to eq(6)
+      expect(game.calc_score([Card.new(13, :spades), Card.new(13, :spades), Card.new(13, :spades)])).to eq(0)
+    end
+  end
 end

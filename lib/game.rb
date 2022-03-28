@@ -23,4 +23,8 @@ class Game
       deal_card(banko)
     end
   end
+
+  def calc_score(hand)
+    hand.map(&:baccarat_value).sum < 10 ? hand.map(&:baccarat_value).sum : hand.map(&:baccarat_value).sum.to_s[1].to_i
+  end
 end
