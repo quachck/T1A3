@@ -86,10 +86,72 @@ describe Game do
       banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
       expect(game.round_over?).to be(true)
     end
+    it "returns true if both the punto's and banko's hand is 8 or 9" do
+      punto.hand.push(Card.new(1, :spades), Card.new(7, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      expect(game.round_over?).to be(true)
+    end
     it "returns false if neither the punto or banko's hand is 8 or 9" do
       punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
       punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
       expect(game.round_over?).to be(false)
+    end
+  end
+
+  describe '#punto_rule' do
+    it "draws a 3rd card if punto/banko's hand is <= 5'" do
+      punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
+      game.punto_rule(punto.hand)
+      expect(punto.hand.length).to eq(3)
+    end
+    it "doesn't draw a 3rd card if punto/banko's hand is > 5'" do
+      punto.hand.push(Card.new(1, :spades), Card.new(6, :spades))
+      game.punto_rule(punto.hand)
+      expect(punto.hand.length).to eq(2)
+    end
+  end
+
+  describe '#banko_rule1' do
+    context 'when punto does not draw a 3rd card' do
+      it "banko draws a 3rd card if banko's hand is <= 5'" do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(3, :spades))
+        game.banko_rule1
+        expect(banko.hand.length).to eq(3)
+      end
+      it "banko doesn't draw a 3rd card if banko's hand is > 5'" do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(6, :spades))
+        game.banko_rule1
+        expect(banko.hand.length).to eq(2)
+      end
+    end
+
+    context 'when punto does draw a 3rd card' do
+      it 'banko draws a 3rd card when value < 3' do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(13, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(1, :spades))
+        game.banko_rule2
+        expect(banko.hand.length).to eq(3)
+      end
+      it 'banko does not draw a 3rd card when value is 3 and punto 3rd card value is 8' do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(8, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(2, :spades))
+        game.banko_rule2
+        expect(banko.hand.length).to eq(2)
+      end
+      it 'banko does not draw a 3rd card when value > 6' do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(8, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(6, :spades))
+        game.banko_rule2
+        expect(banko.hand.length).to eq(2)
+      end
+      it 'banko does draw a 3rd card when value is 6 and punto 3rd card value is 7' do
+        punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(6, :spades))
+        banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+        game.banko_rule2
+        expect(banko.hand.length).to eq(3)
+      end
     end
   end
 end
