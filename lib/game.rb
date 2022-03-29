@@ -27,4 +27,8 @@ class Game
   def calc_score(hand)
     hand.map(&:baccarat_value).sum < 10 ? hand.map(&:baccarat_value).sum : hand.map(&:baccarat_value).sum.to_s[1].to_i
   end
+
+  def round_over?
+    calc_score(punto.hand) >= 8 || calc_score(banko.hand) >= 8
+  end
 end

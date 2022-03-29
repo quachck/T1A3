@@ -47,7 +47,7 @@ describe Game do
 
   describe '#deal_card' do
     it 'deals card to punto/banko' do
-      game.deal_card(punto)
+      expect(punto.hand).to eq(game.deal_card(punto))
       expect(punto.hand.length).to eq(1)
       expect(deck.cards.length).to eq(415)
     end
@@ -72,6 +72,24 @@ describe Game do
       expect(game.calc_score([Card.new(1, :spades), Card.new(7, :spades), Card.new(1, :spades)])).to eq(9)
       expect(game.calc_score([Card.new(10, :spades), Card.new(11, :spades), Card.new(6, :spades)])).to eq(6)
       expect(game.calc_score([Card.new(13, :spades), Card.new(13, :spades), Card.new(13, :spades)])).to eq(0)
+    end
+  end
+
+  describe '#round_over?' do
+    it "returns true if only the punto's hand is 8 or 9" do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      expect(game.round_over?).to be(true)
+    end
+    it "returns true if only the banko's hand is 8 or 9" do
+      punto.hand.push(Card.new(1, :spades), Card.new(10, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      expect(game.round_over?).to be(true)
+    end
+    it "returns false if neither the punto or banko's hand is 8 or 9" do
+      punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
+      punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
+      expect(game.round_over?).to be(false)
     end
   end
 end
