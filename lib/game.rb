@@ -48,4 +48,14 @@ class Game
       banko.hand << deck.draw
     end
   end
+
+  def result
+    if calc_score(punto.hand) > calc_score(banko.hand)
+      :player
+    elsif calc_score(punto.hand) < calc_score(banko.hand)
+      :banker
+    else
+      :tie
+    end
+  end
 end

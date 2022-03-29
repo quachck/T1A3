@@ -154,4 +154,22 @@ describe Game do
       end
     end
   end
+
+  describe '#result' do
+    it 'returns player when punto wins' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      expect(game.result).to eq(:player)
+    end
+    it 'returns banker when banko wins' do
+      punto.hand.push(Card.new(1, :spades), Card.new(1, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      expect(game.result).to eq(:banker)
+    end
+    it 'returns player when punto wins' do
+      punto.hand.push(Card.new(1, :spades), Card.new(1, :spades))
+      banko.hand.push(Card.new(2, :spades), Card.new(13, :spades))
+      expect(game.result).to eq(:tie)
+    end
+  end
 end
