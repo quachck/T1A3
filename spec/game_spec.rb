@@ -1,4 +1,5 @@
 require './lib/game'
+require './lib/player'
 
 describe Game do
   subject(:game) { Game.new }
@@ -258,4 +259,15 @@ describe Game do
     end
   end
 
+  describe '#load_profile' do
+    # it 'loads an existing file if it exists' do
+    #   player = Player.new("test")
+    #   expect(Player).to receive(:from_yaml).with(File.open("save_files/#{player.name.downcase}.yaml", 'r'))
+    #   game.load_profile(player)
+    # end
+    it "raises NoFileError if file doesnt exist" do
+      player = Player.new("non_existent_player")
+      expect { game.load_profile(player) }.to raise_error(NoFileError)
+    end
+  end
 end

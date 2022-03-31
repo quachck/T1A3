@@ -5,6 +5,7 @@ require_relative 'baccarat_rules'
 require_relative 'display'
 
 class InsufficientFundError < StandardError; end
+class NoFileError < StandardError; end
 
 class Game
   include BaccaratRules
@@ -24,9 +25,14 @@ class Game
     when 'Start new profile'
       self.player = Player.new(ask_name)
     when 'Load existing profile'
-      # future feature
+      begin
+        self.current_player = load_profile(Player.new(ask_name))
+      rescue NoFileError => e
+        puts e.message
+        retry
+      end
     end
-    # game_menu
+    game_menu
   end
 
   def game_menu
@@ -133,5 +139,11 @@ class Game
       player.balance -= player_bet_amount
       player_bet_info[:lose] = player_bet_amount
     end
+  end
+
+  def load_profile(player)
+    raise(NoFileError, "Profile doesn't exist") unless File.file?("save_files/#{player.name.downcase}.yaml")
+
+    Player.from_yaml(File.open("save_files/#{player.name.downcase}.yaml", 'r'))
   end
 end
