@@ -101,6 +101,10 @@ class Game
     player.bet[player.bet.length - 1].keys[0]
   end
 
+  def player_bet_amount
+    player.bet[player.bet.length - 1][player_bet]
+  end
+
   def sufficient_funds?(bet_amount)
     player.balance >= bet_amount
   end
