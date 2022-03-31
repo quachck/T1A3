@@ -229,4 +229,12 @@ describe Game do
     end
   end
 
+  describe '#player_win_amount' do
+    it 'returns player win amount' do
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
+      expect(game.player_win_amount).to eq(2000)
+    end
+  end
+
 end

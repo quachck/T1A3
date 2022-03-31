@@ -105,12 +105,16 @@ class Game
     player.bet[player.bet.length - 1][player_bet]
   end
 
-  def sufficient_funds?(bet_amount)
-    player.balance >= bet_amount
-  end
-
   def player_result
     player_bet == result
+  end
+
+  def player_win_amount
+    player_bet_amount * ODDS[player_bet]
+  end
+
+  def sufficient_funds?(bet_amount)
+    player.balance >= bet_amount
   end
 
   def update_player_bet
