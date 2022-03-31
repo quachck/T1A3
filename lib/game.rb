@@ -53,8 +53,13 @@ class Game
       update_player_balance
       game_menu
     when 'Show balance'
-    when 'Save progress and quit'
+      puts Rainbow("Your current balance is #{player.balance}").blue
+      game_menu
     when 'Save progress and return to main menu'
+      save_profile(player)
+      start_menu
+    when 'Save progress and quit'
+      save_profile(player)
     end
   end
 
