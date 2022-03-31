@@ -1,0 +1,4 @@
+--- !ruby/object:Player
+name: David
+balance: 1000
+bet: []

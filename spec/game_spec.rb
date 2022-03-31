@@ -271,10 +271,18 @@ describe Game do
     end
   end
 
-  describe '#player=' do
+  describe '#set_player' do
     it "raises ExistingFileError if file exists" do
       player = Player.new("test")
-      expect { game.player = player }.to raise_error(ExistingFileError)
+      expect { game.set_player(player, true) }.to raise_error(ExistingFileError)
+    end
+  end
+
+  describe '#record_history' do
+    it 'adds the result to the start of the history array' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      expect(game.record_history).to eq(['P'])
     end
   end
 end

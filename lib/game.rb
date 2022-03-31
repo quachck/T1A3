@@ -11,8 +11,7 @@ class ExistingFileError < StandardError; end
 class Game
   include BaccaratRules
   include Display
-  attr_reader :player
-  attr_accessor :deck, :punto, :banko, :history
+  attr_accessor :deck, :punto, :banko, :player, :history
 
   def initialize
     @deck = Deck.new(8)
@@ -64,7 +63,7 @@ class Game
   end
 
   def set_player(player, is_start)
-    raise(ExistingFileError, ask_confirmation) if File.file?("save_files/#{player.name.downcase}.yaml") && is_start
+    raise(ExistingFileError) if File.file?("save_files/#{player.name.downcase}.yaml") && is_start
 
     @player = player
   end
@@ -157,6 +156,7 @@ class Game
     end
   end
 
+  # save/load feature
   def load_profile(player)
     raise(NoFileError, "Profile doesn't exist") unless File.file?("save_files/#{player.name.downcase}.yaml")
 
@@ -164,8 +164,13 @@ class Game
   end
 
   def save_profile(player)
-    f = File.open("#{player.name.downcase}.yaml", 'w')
+    f = File.open("save_files/#{player.name.downcase}.yaml", 'w')
     f.puts player.to_yaml
     f.close
+  end
+
+  # record result history
+  def record_history
+    history.unshift(result.to_s[0].upcase)
   end
 end
