@@ -39,7 +39,7 @@ module Display
     end
   end
 
-  def ask_confirmation
-    TTY::Prompt.new.yes?('Are you sure?')
+  def ask_confirmation(msg)
+    TTY::Prompt.new.yes?(msg)
   end
 end

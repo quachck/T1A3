@@ -26,17 +26,15 @@ class Game
     case display_startup_options
     when 'Start new profile'
       begin
-        self.current_player = Player.new(ask_name)
-      rescue ExistingFileError => e
-        puts e.message
-        retry
+        set_player(Player.new(ask_name), true)
+      rescue ExistingFileError
+        ask_confirmation(Rainbow("Profile already exists, go back?").red) ? start_menu : retry
       end
     when 'Load existing profile'
       begin
-        self.current_player = load_profile(Player.new(ask_name))
-      rescue NoFileError => e
-        puts e.message
-        retry
+        set_player(load_profile(Player.new(ask_name)), false)
+      rescue NoFileError
+        ask_confirmation(Rainbow("Profile doesn't exist, go back?").red) ? start_menu : retry
       end
     end
     game_menu
@@ -60,8 +58,8 @@ class Game
     end
   end
 
-  def player=(player)
-    raise(ExistingFileError, Rainbow("Profile already exists").red) if File.file?("save_files/#{player.name.downcase}.yaml")
+  def set_player(player, is_start)
+    raise(ExistingFileError, ask_confirmation) if File.file?("save_files/#{player.name.downcase}.yaml") && is_start
 
     @player = player
   end
