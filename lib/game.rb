@@ -47,6 +47,7 @@ class Game
     end
   end
 
+  # dealing methods
   def deal_card(dealer)
     dealer.hand << deck.draw
   end
@@ -80,6 +81,7 @@ class Game
     banko.hand << deck.draw if punto.hand.length == 3 && BANKER_RULES[banko_hand].include?(punto.hand[2].baccarat_value)
   end
 
+  # game result
   def result
     if calc_score(punto.hand) > calc_score(banko.hand)
       :player
@@ -91,8 +93,8 @@ class Game
   end
 
   # betting functionality
-  def sufficient_funds?(bet_amount)
-    player.balance >= bet_amount
+  def player_bet_info
+    player.bet[player.bet.length - 1]
   end
 
   def update_player_bet
@@ -102,4 +104,3 @@ class Game
     player.bet << { ask_what_bet => bet_amount }
   end
 end
-

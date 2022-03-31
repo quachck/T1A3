@@ -6,16 +6,10 @@ describe Game do
   subject(:banko) { game.banko }
   subject(:deck) { game.deck }
   subject(:player) { game.player }
+
   it 'can be instantiated' do
     expect(game).not_to be_nil
     expect(game).to be_an_instance_of Game
-  end
-
-  describe '#deck' do
-    it 'returns 8 decks' do
-      expect(game.deck).to be_an_instance_of Deck
-      expect(game.deck.cards.length).to eq(416)
-    end
   end
 
   describe '#punto' do
@@ -32,9 +26,16 @@ describe Game do
     end
   end
 
+  describe '#deck' do
+    it 'returns 8 decks' do
+      expect(game.deck).to be_an_instance_of Deck
+      expect(game.deck.cards.length).to eq(416)
+    end
+  end
+
   describe '#player' do
-    it 'returns a nil' do
-      expect(game.player).to be_nil
+    it 'returns nil' do
+      expect(player).to be_nil
     end
   end
 
@@ -186,4 +187,13 @@ describe Game do
       expect { game.update_player_bet }.to raise_error(InsufficientFundError)
     end
   end
+
+  describe 'player_bet_info' do
+    it 'returns player bet info' do
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
+      expect(game.player_bet_info).to eq({ banker: 1000, win: 2000 })
+    end
+  end
+
 end
