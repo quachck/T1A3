@@ -97,6 +97,14 @@ class Game
     player.bet[player.bet.length - 1]
   end
 
+  def player_bet
+    player.bet[player.bet.length - 1].keys[0]
+  end
+
+  def sufficient_funds?(bet_amount)
+    player.balance >= bet_amount
+  end
+
   def update_player_bet
     bet_amount = ask_bet_amount.to_i
     raise(InsufficientFundError, "You only have #{player.balance}") unless sufficient_funds?(bet_amount)

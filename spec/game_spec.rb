@@ -188,11 +188,19 @@ describe Game do
     end
   end
 
-  describe 'player_bet_info' do
+  describe '#player_bet_info' do
     it 'returns player bet info' do
       game.player = Player.new("David")
       player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
       expect(game.player_bet_info).to eq({ banker: 1000, win: 2000 })
+    end
+  end
+
+  describe '#player_bet' do
+    it 'returns what the player bet' do
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
+      expect(game.player_bet).to eq(:banker)
     end
   end
 
