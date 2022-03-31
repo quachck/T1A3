@@ -4,8 +4,8 @@ require 'rainbow'
 # Module to handle display
 module Display
   STARTUP_OPTIONS = [
-    'Load existing profile',
-    'Start new profile'
+    'Start new profile',
+    'Load existing profile'
   ].freeze
   GAME_OPTIONS = [
     'Bet',
@@ -24,7 +24,7 @@ module Display
 
   def ask_bet_amount
     TTY::Prompt.new.ask('How much would you like to bet?') do |q|
-      q.validate(/[0-9]/, 'Please enter a valid bet amount')
+      q.validate(/\A\d+\Z/, 'Please enter a valid bet amount')
     end
   end
 

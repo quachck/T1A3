@@ -4,7 +4,7 @@ class Player
 
   def initialize(name)
     @name = name
-    @balance = 1000.00
+    @balance = 1000
     @bet = []
   end
 end

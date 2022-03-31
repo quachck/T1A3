@@ -15,7 +15,7 @@ module BaccaratRules
 
   ODDS = {
     player: 2,
-    banker: 1.95,
+    banker: 2,
     tie: 9
   }.freeze
 end

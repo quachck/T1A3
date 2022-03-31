@@ -5,43 +5,42 @@ describe Game do
   subject(:punto) { game.punto }
   subject(:banko) { game.banko }
   subject(:deck) { game.deck }
+  subject(:player) { game.player }
   it 'can be instantiated' do
     expect(game).not_to be_nil
     expect(game).to be_an_instance_of Game
   end
 
-  describe '#initialize' do
-    describe '#deck' do
-      it 'returns 8 decks' do
-        expect(game.deck).to be_an_instance_of Deck
-        expect(game.deck.cards.length).to eq(416)
-      end
+  describe '#deck' do
+    it 'returns 8 decks' do
+      expect(game.deck).to be_an_instance_of Deck
+      expect(game.deck.cards.length).to eq(416)
     end
+  end
 
-    describe '#punto' do
-      it 'returns a Dealer object' do
-        expect(punto).not_to be_nil
-        expect(punto).to be_an_instance_of Dealer
-      end
+  describe '#punto' do
+    it 'returns a Dealer object' do
+      expect(punto).not_to be_nil
+      expect(punto).to be_an_instance_of Dealer
     end
+  end
 
-    describe '#banko' do
-      it 'returns a Dealer object' do
-        expect(banko).not_to be_nil
-        expect(banko).to be_an_instance_of Dealer
-      end
+  describe '#banko' do
+    it 'returns a Dealer object' do
+      expect(banko).not_to be_nil
+      expect(banko).to be_an_instance_of Dealer
     end
+  end
 
-    describe '#player' do
-      it 'returns a nil' do
-        expect(game.player).to be_nil
-      end
+  describe '#player' do
+    it 'returns a nil' do
+      expect(game.player).to be_nil
     end
+  end
 
-    describe '#history' do
-      it 'returns empty array' do
-        expect(game.history).to eq([])
-      end
+  describe '#history' do
+    it 'returns empty array' do
+      expect(game.history).to eq([])
     end
   end
 
@@ -113,13 +112,13 @@ describe Game do
 
   describe '#banko_rule1' do
     context 'when punto does not draw a 3rd card' do
-      it "banko draws a 3rd card if banko's hand is <= 5'" do
+      it "draws a 3rd card if banko's hand is <= 5'" do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(3, :spades))
         game.banko_rule1
         expect(banko.hand.length).to eq(3)
       end
-      it "banko doesn't draw a 3rd card if banko's hand is > 5'" do
+      it "doesn't draw a 3rd card if banko's hand is > 5'" do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(6, :spades))
         game.banko_rule1
@@ -128,25 +127,25 @@ describe Game do
     end
 
     context 'when punto does draw a 3rd card' do
-      it 'banko draws a 3rd card when value < 3' do
+      it 'draws a 3rd card when value < 3' do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(13, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(1, :spades))
         game.banko_rule2
         expect(banko.hand.length).to eq(3)
       end
-      it 'banko does not draw a 3rd card when value is 3 and punto 3rd card value is 8' do
+      it 'does not draw a 3rd card when value is 3 and punto 3rd card value is 8' do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(8, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(2, :spades))
         game.banko_rule2
         expect(banko.hand.length).to eq(2)
       end
-      it 'banko does not draw a 3rd card when value > 6' do
+      it 'does not draw a 3rd card when value > 6' do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(8, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(6, :spades))
         game.banko_rule2
         expect(banko.hand.length).to eq(2)
       end
-      it 'banko does draw a 3rd card when value is 6 and punto 3rd card value is 7' do
+      it 'does draw a 3rd card when value is 6 and punto 3rd card value is 7' do
         punto.hand.push(Card.new(1, :spades), Card.new(13, :spades), Card.new(6, :spades))
         banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
         game.banko_rule2
@@ -166,10 +165,25 @@ describe Game do
       banko.hand.push(Card.new(1, :spades), Card.new(8, :spades))
       expect(game.result).to eq(:banker)
     end
-    it 'returns player when punto wins' do
+    it "returns player when it's a tie" do
       punto.hand.push(Card.new(1, :spades), Card.new(1, :spades))
       banko.hand.push(Card.new(2, :spades), Card.new(13, :spades))
       expect(game.result).to eq(:tie)
+    end
+  end
+
+  describe '#update_player_bet' do
+    it 'returns correctly stores bet info' do
+      game.player = Player.new("David")
+      allow(game).to receive(:ask_bet_amount).and_return('1000')
+      allow(game).to receive(:ask_what_bet).and_return(:player)
+      game.update_player_bet
+      expect(player.bet).to eq([{ player: 1000 }])
+    end
+    it 'raises an error if insufficient funds' do
+      game.player = Player.new("David")
+      allow(game).to receive(:ask_bet_amount).and_return('1001')
+      expect { game.update_player_bet }.to raise_error(InsufficientFundError)
     end
   end
 end
