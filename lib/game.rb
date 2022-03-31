@@ -39,7 +39,7 @@ class Game
         retry
       end
       play_round
-      pay_out
+      update_player_balance
       game_menu
     when 'Show balance'
     when 'Save progress and quit'
@@ -122,5 +122,16 @@ class Game
     raise(InsufficientFundError, "You only have #{player.balance}") unless sufficient_funds?(bet_amount)
 
     player.bet << { ask_what_bet => bet_amount }
+  end
+
+  # payout calculations
+  def update_player_balance
+    if player_result
+      player.balance += player_win_amount
+      player_bet_info[:win] = player_win_amount
+    else
+      player.balance -= player_bet_amount
+      player_bet_info[:lose] = player_bet_amount
+    end
   end
 end

@@ -237,4 +237,25 @@ describe Game do
     end
   end
 
+  describe '#update_player_balance' do
+    it 'increases balance when player wins' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { player: 1000, win: 2000 }]
+      game.update_player_balance
+      expect(player.balance).to eq(3000)
+      expect(game.player_bet_info[:win]).to eq(2000)
+    end
+    it 'decreases balance when player loses' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 200, lose: 200 }]
+      game.update_player_balance
+      expect(player.balance).to eq(800)
+      expect(game.player_bet_info[:lose]).to eq(200)
+    end
+  end
+
 end
