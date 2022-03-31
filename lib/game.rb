@@ -6,11 +6,13 @@ require_relative 'display'
 
 class InsufficientFundError < StandardError; end
 class NoFileError < StandardError; end
+class ExistingFileError < StandardError; end
 
 class Game
   include BaccaratRules
   include Display
-  attr_accessor :deck, :punto, :banko, :player, :history
+  attr_reader :player
+  attr_accessor :deck, :punto, :banko, :history
 
   def initialize
     @deck = Deck.new(8)
@@ -23,7 +25,12 @@ class Game
   def start_menu
     case display_startup_options
     when 'Start new profile'
-      self.player = Player.new(ask_name)
+      begin
+        self.current_player = Player.new(ask_name)
+      rescue ExistingFileError => e
+        puts e.message
+        retry
+      end
     when 'Load existing profile'
       begin
         self.current_player = load_profile(Player.new(ask_name))
@@ -51,6 +58,12 @@ class Game
     when 'Save progress and quit'
     when 'Save progress and return to main menu'
     end
+  end
+
+  def player=(player)
+    raise(ExistingFileError, Rainbow("Profile already exists").red) if File.file?("save_files/#{player.name.downcase}.yaml")
+
+    @player = player
   end
 
   # dealing methods
@@ -145,5 +158,11 @@ class Game
     raise(NoFileError, "Profile doesn't exist") unless File.file?("save_files/#{player.name.downcase}.yaml")
 
     Player.from_yaml(File.open("save_files/#{player.name.downcase}.yaml", 'r'))
+  end
+
+  def save_profile(player)
+    f = File.open("#{player.name.downcase}.yaml", 'w')
+    f.puts player.to_yaml
+    f.close
   end
 end

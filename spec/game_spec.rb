@@ -270,4 +270,11 @@ describe Game do
       expect { game.load_profile(player) }.to raise_error(NoFileError)
     end
   end
+
+  describe '#player=' do
+    it "raises ExistingFileError if file exists" do
+      player = Player.new("test")
+      expect { game.player = player }.to raise_error(ExistingFileError)
+    end
+  end
 end
