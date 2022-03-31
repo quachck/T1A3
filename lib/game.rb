@@ -109,6 +109,10 @@ class Game
     player.balance >= bet_amount
   end
 
+  def player_result
+    player_bet == result
+  end
+
   def update_player_bet
     bet_amount = ask_bet_amount.to_i
     raise(InsufficientFundError, "You only have #{player.balance}") unless sufficient_funds?(bet_amount)

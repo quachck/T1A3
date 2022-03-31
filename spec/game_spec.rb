@@ -197,7 +197,7 @@ describe Game do
   end
 
   describe '#player_bet' do
-    it 'returns what the player bet' do
+    it 'returns what the player bet on' do
       game.player = Player.new("David")
       player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
       expect(game.player_bet).to eq(:banker)
@@ -205,10 +205,27 @@ describe Game do
   end
 
   describe '#player_bet_amount' do
-    it 'returns what the player bet' do
+    it 'returns how much the player bet' do
       game.player = Player.new("David")
       player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
       expect(game.player_bet_amount).to eq(1000)
+    end
+  end
+
+  describe '#player_result' do
+    it 'returns false if player lost' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
+      expect(game.player_result).to eq(false)
+    end
+    it 'returns true if player won' do
+      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
+      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
+      game.player = Player.new("David")
+      player.bet = [{ tie: 500, lose: 500 }, { player: 1000, win: 2000 }]
+      expect(game.player_result).to eq(true)
     end
   end
 
