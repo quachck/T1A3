@@ -84,7 +84,7 @@ class Game
     end
     deal_dummies([punto.hand, banko.hand])
     record_history
-    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores, player.balance, [player_bet, player_bet_amount])
+    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores_formatted, player.balance, [player_bet, player_bet_amount])
     # puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
   end
 
@@ -117,6 +117,10 @@ class Game
   # game logic
   def calc_score(hand)
     hand.map(&:baccarat_value).sum < 10 ? hand.map(&:baccarat_value).sum : hand.map(&:baccarat_value).sum.to_s[1].to_i
+  end
+
+  def scores_formatted
+    [calc_score(punto.hand), calc_score(banko.hand)]
   end
 
   def round_over?
@@ -173,9 +177,9 @@ class Game
   # formatted player result to help with GUI
   def player_result_formatted
     if player_result
-      "#{Rainbow("CONGRATS YOU WIN #{r}#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: #{r}#{current_player.balance + player_win_amount}").gold}"
+      "#{Rainbow("CONGRATS YOU WIN #{r}#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: #{r}#{player.balance + player_win_amount}").gold}"
     else
-      "#{Rainbow("SORRY YOU LOSE #{r}#{player_bet_amount}\n").red}#{Rainbow("NEW BALANCE: #{r}#{current_player.balance - player_bet_amount}").gold}"
+      "#{Rainbow("SORRY YOU LOSE #{r}#{player_bet_amount}\n").red}#{Rainbow("NEW BALANCE: #{r}#{player.balance - player_bet_amount}").gold}"
     end
   end
 
