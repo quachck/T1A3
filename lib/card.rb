@@ -57,6 +57,10 @@ class Card
     HUMAN_VALUES[value].is_a?(Symbol) ? HUMAN_VALUES[value][0].to_s.capitalize : HUMAN_VALUES[value]
   end
 
+  def suit_icon
+    SUITS_ICONS[suit]
+  end
+
   def to_s
     "#{short_hand_value}#{SUITS_ICONS[suit]}"
   end

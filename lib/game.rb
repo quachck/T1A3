@@ -2,6 +2,7 @@ require_relative 'player'
 require_relative 'dealer'
 require_relative 'deck'
 require_relative 'baccarat_rules'
+require_relative 'baccarat_gui'
 require_relative 'display'
 
 class InsufficientFundError < StandardError; end
@@ -10,6 +11,7 @@ class ExistingFileError < StandardError; end
 
 class Game
   include BaccaratRules
+  include BaccaratGUI
   include Display
   attr_accessor :deck, :punto, :banko, :player, :history
 
@@ -85,7 +87,7 @@ class Game
     deal_dummies([punto.hand, banko.hand])
     record_history
     draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores_formatted, player.balance, [player_bet, player_bet_amount])
-    # puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
+    puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
   end
 
   # dealing methods
@@ -94,6 +96,7 @@ class Game
   end
 
   def deal_natural
+    clear_hand
     2.times do
       deal_card(punto)
       deal_card(banko)
@@ -116,7 +119,8 @@ class Game
 
   # game logic
   def calc_score(hand)
-    hand.map(&:baccarat_value).sum < 10 ? hand.map(&:baccarat_value).sum : hand.map(&:baccarat_value).sum.to_s[1].to_i
+    score = hand.reject { |e| e.value == '' }.map(&:baccarat_value).sum
+    score < 10 ? score : score.to_s[1].to_i
   end
 
   def scores_formatted
