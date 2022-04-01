@@ -21,6 +21,11 @@ class Game
     @history = []
   end
 
+  # currency of the game 'ruby'
+  def r
+    "\u039B"
+  end
+
   def start_menu
     case display_startup_options
     when 'Start new profile'
@@ -147,6 +152,15 @@ class Game
 
   def player_result
     player_bet == result
+  end
+
+  # formatted player result to help with display
+  def player_result_formatted
+    if player_result
+      "#{Rainbow("CONGRATS YOU WIN #{r}#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: #{r}#{current_player.balance + player_win_amount}").gold}"
+    else
+      "#{Rainbow("SORRY YOU LOSE #{r}#{player_bet_amount}\n").red}#{Rainbow("NEW BALANCE: #{r}#{current_player.balance - player_bet_amount}").gold}"
+    end
   end
 
   def player_win_amount
