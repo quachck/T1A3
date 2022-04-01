@@ -126,6 +126,12 @@ class Game
     end
   end
 
+  # compressing dealer info into an array to use as an argument to display it to the GUI
+  def dealer_info(player_hand, banker_hand, history)
+    dealer_info = []
+    dealer_info.push(player_hand, banker_hand, history)
+  end
+
   # betting functionality
   def player_bet_info
     player.bet[player.bet.length - 1]
