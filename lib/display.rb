@@ -9,8 +9,9 @@ module Display
   ].freeze
   GAME_OPTIONS = [
     'Bet',
-    'Save progress and quit',
-    'Save progress and return to main menu'
+    'Show balance',
+    'Save progress and return to main menu',
+    'Save progress and quit'
   ].freeze
   BET_OPTIONS = %i[player banker tie].freeze
 

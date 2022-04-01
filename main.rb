@@ -3,4 +3,4 @@ require './lib/game'
 
 game = Game.new
 
-# game.start_menu
+game.start_menu
