@@ -67,10 +67,25 @@ class Game
     end
   end
 
+  # custom setter method for player
   def set_player(player, is_start)
     raise(ExistingFileError) if File.file?("save_files/#{player.name.downcase}.yaml") && is_start
 
     @player = player
+  end
+
+  # method to play 1 round
+  def play_round
+    deal_natural
+    unless round_over?
+      punto_rule(punto.hand)
+      banko_rule1
+      banko_rule2
+    end
+    deal_dummies([punto.hand, banko.hand])
+    record_history
+    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores, player.balance, [player_bet, player_bet_amount])
+    # puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
   end
 
   # dealing methods
@@ -85,6 +100,7 @@ class Game
     end
   end
 
+  # deal dummies to help with GUI
   def deal_dummies(dealer_hands)
     dealer_hands.each do |hand|
       hand << Card.new('', '') if hand.length == 2
@@ -154,7 +170,7 @@ class Game
     player_bet == result
   end
 
-  # formatted player result to help with display
+  # formatted player result to help with GUI
   def player_result_formatted
     if player_result
       "#{Rainbow("CONGRATS YOU WIN #{r}#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: #{r}#{current_player.balance + player_win_amount}").gold}"
@@ -189,6 +205,11 @@ class Game
     end
   end
 
+  # record result history
+  def record_history
+    history.unshift(result.to_s[0].upcase)
+  end
+
   # save/load feature
   def load_profile(player)
     raise(NoFileError, "Profile doesn't exist") unless File.file?("save_files/#{player.name.downcase}.yaml")
@@ -200,10 +221,5 @@ class Game
     f = File.open("save_files/#{player.name.downcase}.yaml", 'w')
     f.puts player.to_yaml
     f.close
-  end
-
-  # record result history
-  def record_history
-    history.unshift(result.to_s[0].upcase)
   end
 end
