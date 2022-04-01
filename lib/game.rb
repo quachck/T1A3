@@ -80,6 +80,19 @@ class Game
     end
   end
 
+  def deal_dummies(dealer_hands)
+    dealer_hands.each do |hand|
+      hand << Card.new('', '') if hand.length == 2
+    end
+  end
+
+  def clear_hand
+    unless punto.hand.empty?
+      punto.hand.clear
+      banko.hand.clear
+    end
+  end
+
   # game logic
   def calc_score(hand)
     hand.map(&:baccarat_value).sum < 10 ? hand.map(&:baccarat_value).sum : hand.map(&:baccarat_value).sum.to_s[1].to_i
