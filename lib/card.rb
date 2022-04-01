@@ -40,6 +40,22 @@ class Card
     13 => 0
   }.freeze
 
+  BURN_VALUES = {
+    1 => 1,
+    2 => 2,
+    3 => 3,
+    4 => 4,
+    5 => 5,
+    6 => 6,
+    7 => 7,
+    8 => 8,
+    9 => 9,
+    10 => 10,
+    11 => 10,
+    12 => 10,
+    13 => 10
+  }.freeze
+
   def initialize(value, suit)
     @value = value
     @suit = suit
@@ -51,6 +67,10 @@ class Card
 
   def baccarat_value
     BACCARAT_VALUES[value]
+  end
+  
+  def burn_value
+    BURN_VALUES[value]
   end
 
   def short_hand_value

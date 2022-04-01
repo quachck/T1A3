@@ -188,7 +188,7 @@ class Game
   end
 
   def player_win_amount
-    player_bet_amount * ODDS[player_bet]
+    player_bet_amount * ODDS[player_bet].to_i
   end
 
   def sufficient_funds?(bet_amount)
