@@ -1,6 +1,9 @@
-require './lib/game'
-# require './lib/deck'
+require_relative 'lib/game'
 
-game = Game.new
+def start_game
+  Display.print_title
+  game = Game.new
+  game.start_menu
+end
 
-game.start_menu
+start_game

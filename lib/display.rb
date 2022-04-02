@@ -1,4 +1,5 @@
 require 'tty-prompt'
+require 'tty-font'
 require 'rainbow'
 
 # Module to handle display
@@ -15,8 +16,13 @@ module Display
   ].freeze
   BET_OPTIONS = %i[player banker tie].freeze
 
+  def self.print_title
+    font = TTY::Font.new(:doom)
+    puts Rainbow(font.write('WELCOME TO THE RUBY', letter_spacing: 1)).darkred
+  end
+
   def display_startup_options
-    TTY::Prompt.new.select(Rainbow('Welcome to The Ruby').red, STARTUP_OPTIONS)
+    TTY::Prompt.new.select(Rainbow('What would you like to do?').gold, STARTUP_OPTIONS)
   end
 
   def display_game_options
@@ -35,7 +41,7 @@ module Display
 
   def ask_name
     TTY::Prompt.new.ask('What is your name?') do |q|
-      q.validate(/\A\D{3, 15}\Z/, 'Please enter a valid name')
+      q.validate(/\A\D{3,15}\Z/, 'Please enter a valid name')
       q.modify(:capitalize)
     end
   end
