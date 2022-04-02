@@ -38,7 +38,7 @@ module BaccaratGUI
     ) { text }
   end
 
-  def draw_table(dealer_info, player_result, results, balance, bet_info)
+  def draw_table(dealer_info, player_result, results, balance, bet_info, card_count, new_shoe_msg)
     system 'clear'
     draw_text([16, 4], "PLAYER#{' ' * 35}BANKER", false, :left, [50, 3])
     draw_text([31, 7], "#{results[0]}  #{result.to_s.upcase}!  #{results[1]}", false, :center, [20, 3])
@@ -46,6 +46,8 @@ module BaccaratGUI
     draw_text([28, 10], "#{Rainbow("BALANCE: \u039B#{balance}\n").gold}#{Rainbow("BET: \u039B#{bet_info[1]} ON #{bet_info[0].upcase}").blue}", true, :center, [25, 5])
     draw_text([54, 10], "HISTORY:\n#{dealer_info[2].join(' ')}", true, :left, [25, 5])
     draw_text([25, 17], player_result, false, :center, [30, 5])
+    draw_text([2, 15], "CARDS LEFT IN SHOE:\n#{card_count}", true, :left, [25, 5])
+    draw_text([31, 3], new_shoe_msg, false, :center, [25, 1])
 
     draw_card([10, 5], dealer_info[0][0])
     draw_card([17, 5], dealer_info[0][1])

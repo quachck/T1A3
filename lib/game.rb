@@ -82,8 +82,11 @@ class Game
     burn(deck.cards.pop) if new_deck?
     play_coup
     record_history
-    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores_formatted, player.balance, [player_bet, player_bet_amount])
-    puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
+    draw_table(
+      dealer_info(punto.hand, banko.hand, history), player_result_formatted,
+      scores_formatted, player.balance, [player_bet, player_bet_amount],
+      deck.cards.length, shoe_message
+    )
   end
 
   def play_coup
@@ -177,8 +180,13 @@ class Game
 
   def new_shoe
     deck.cards.clear
-    deck.cards << Deck.new.cards
+    deck.cards << Deck.new(1).cards
     deck.cards.flatten!
+  end
+
+  # message to show when new shoe is coming for GUI
+  def shoe_message
+    shoe_over? ? 'NEW SHOE NEXT ROUND!' : ''
   end
 
   # compressing dealer info into an array to use as an argument to display it to the GUI
