@@ -2,10 +2,10 @@ class Card
   attr_reader :value, :suit
 
   SUITS_ICONS = {
-    spades: "\u2660".encode('utf-8'),
-    clubs: "\u2663".encode('utf-8'),
-    diamonds: "\u2666".encode('utf-8'),
-    hearts: "\u2665".encode('utf-8')
+    spades: "\u2660",
+    clubs: "\u2663",
+    diamonds: "\u2666",
+    hearts: "\u2665"
   }.freeze
 
   HUMAN_VALUES = {
