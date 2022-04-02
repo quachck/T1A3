@@ -46,9 +46,9 @@ module Display
   end
 
   def self.help_message
-    puts "Enter ./run_app.sh to begin the app"
-    puts "Enter ./run_app.sh -i to see more information"
-    puts "Enter ./run_app.sh -r to see game rules"
+    puts "Enter ./run_main.sh to begin the app"
+    puts "Enter ./run_main.sh -i to see more information"
+    puts "Enter ./run_main.sh -r to see game rules"
   end
 
   def self.info_message
