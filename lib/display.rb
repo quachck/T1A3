@@ -35,7 +35,7 @@ module Display
 
   def ask_name
     TTY::Prompt.new.ask('What is your name?') do |q|
-      q.validate(/\A\D{3,}\Z/, 'Please enter a valid name')
+      q.validate(/\A\D{3, 15}\Z/, 'Please enter a valid name')
       q.modify(:capitalize)
     end
   end

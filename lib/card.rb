@@ -68,7 +68,7 @@ class Card
   def baccarat_value
     BACCARAT_VALUES[value]
   end
-  
+
   def burn_value
     BURN_VALUES[value]
   end
