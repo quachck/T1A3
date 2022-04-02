@@ -47,7 +47,7 @@ class Game
   end
 
   def game_menu
-    case display_game_options
+    case display_game_options(player.name)
     when 'Bet'
       begin
         update_player_bet

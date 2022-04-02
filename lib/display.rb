@@ -22,11 +22,11 @@ module Display
   end
 
   def display_startup_options
-    TTY::Prompt.new.select(Rainbow('What would you like to do?').gold, STARTUP_OPTIONS)
+    TTY::Prompt.new.select('What would you like to do?', STARTUP_OPTIONS)
   end
 
-  def display_game_options
-    TTY::Prompt.new.select('What would you like to do?', GAME_OPTIONS)
+  def display_game_options(name)
+    TTY::Prompt.new.select(Rainbow("What would you like to do, #{name}?").gold, GAME_OPTIONS)
   end
 
   def ask_bet_amount
