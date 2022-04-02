@@ -1,5 +1,4 @@
 require 'tty-prompt'
-require 'tty-font'
 require 'rainbow'
 require 'tty-link'
 
