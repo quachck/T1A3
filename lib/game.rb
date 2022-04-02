@@ -16,14 +16,14 @@ class Game
   attr_accessor :deck, :punto, :banko, :player, :history
 
   def initialize
-    @deck = Deck.new(1)
+    @deck = Deck.new(8)
     @punto = Dealer.new
     @banko = Dealer.new
     @player = nil
     @history = []
   end
 
-  # currency of the game 'ruby'
+  # currency of the game, 'ruby'
   def r
     "\u039B"
   end
@@ -170,7 +170,7 @@ class Game
   end
 
   def new_deck?
-    deck.cards.length == 52
+    deck.cards.length == 416
   end
 
   # methods to determine when it's time to deal a new shoe
@@ -180,7 +180,7 @@ class Game
 
   def new_shoe
     deck.cards.clear
-    deck.cards << Deck.new(1).cards
+    deck.cards << Deck.new(8).cards
     deck.cards.flatten!
   end
 
@@ -249,7 +249,7 @@ class Game
 
   # record result history
   def record_history
-    history.unshift(result.to_s[0].upcase)
+    player_result ? history.unshift(Rainbow(result.to_s[0].upcase).green) : history.unshift(Rainbow(result.to_s[0].upcase).red)
   end
 
   # save/load feature
