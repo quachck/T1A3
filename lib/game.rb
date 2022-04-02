@@ -16,7 +16,7 @@ class Game
   attr_accessor :deck, :punto, :banko, :player, :history
 
   def initialize
-    @deck = Deck.new(8)
+    @deck = Deck.new(1)
     @punto = Dealer.new
     @banko = Dealer.new
     @player = nil
@@ -78,6 +78,15 @@ class Game
 
   # method to play 1 round
   def play_round
+    new_shoe if shoe_over?
+    burn(deck.cards.pop) if new_deck?
+    play_coup
+    record_history
+    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores_formatted, player.balance, [player_bet, player_bet_amount])
+    puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
+  end
+
+  def play_coup
     deal_natural
     unless round_over?
       punto_rule(punto.hand)
@@ -85,9 +94,6 @@ class Game
       banko_rule2
     end
     deal_dummies([punto.hand, banko.hand])
-    record_history
-    draw_table(dealer_info(punto.hand, banko.hand, history), player_result_formatted, scores_formatted, player.balance, [player_bet, player_bet_amount])
-    puts "THERE ARE #{deck.cards.length} CARDS LEFT IN THE DECK"
   end
 
   # dealing methods
@@ -153,6 +159,25 @@ class Game
     else
       :tie
     end
+  end
+
+  # burn logic
+  def burn(burnt_card)
+    burnt_card.burn_value.times { deck.cards.pop }
+  end
+
+  def new_deck?
+    deck.cards.length == 52
+  end
+
+  # methods to determine when it's time to deal a new shoe
+  def shoe_over?
+    deck.cards.length < 6
+  end
+
+  def new_shoe
+    deck.cards.clear
+    deck << Deck.new
   end
 
   # compressing dealer info into an array to use as an argument to display it to the GUI
