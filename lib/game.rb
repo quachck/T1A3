@@ -177,7 +177,8 @@ class Game
 
   def new_shoe
     deck.cards.clear
-    deck << Deck.new
+    deck.cards << Deck.new.cards
+    deck.cards.flatten!
   end
 
   # compressing dealer info into an array to use as an argument to display it to the GUI
