@@ -1,6 +1,7 @@
 require 'tty-prompt'
 require 'tty-font'
 require 'rainbow'
+require 'tty-link'
 
 # Module to handle display
 module Display
@@ -16,17 +17,12 @@ module Display
   ].freeze
   BET_OPTIONS = %i[player banker tie].freeze
 
-  def self.print_title
-    font = TTY::Font.new(:doom)
-    puts Rainbow(font.write('WELCOME TO THE RUBY', letter_spacing: 1)).darkred
-  end
-
   def display_startup_options
-    TTY::Prompt.new.select('What would you like to do?', STARTUP_OPTIONS)
+    TTY::Prompt.new.select(Rainbow("Welcome to The Ruby!").gold, STARTUP_OPTIONS)
   end
 
   def display_game_options(name)
-    TTY::Prompt.new.select(Rainbow("What would you like to do, #{name}?").gold, GAME_OPTIONS)
+    TTY::Prompt.new.select(Rainbow("What would you like to do, #{name}?").magenta, GAME_OPTIONS)
   end
 
   def ask_bet_amount
@@ -48,5 +44,25 @@ module Display
 
   def ask_confirmation(msg)
     TTY::Prompt.new.yes?(msg)
+  end
+
+  def self.help_message
+    puts "Enter ./run_app.sh to begin the app"
+    puts "Enter ./run_app.sh -i to see more information"
+    puts "Enter ./run_app.sh -r to see game rules"
+  end
+
+  def self.info_message
+    puts "Welcome to The Ruby"
+    puts "The Ruby only features baccarat at the moment"
+    puts "You will begin with 1000 rubies"
+    puts "You can only bet whole units of rubies"
+    puts "You can leave and join at anytime without losing your progress"
+    puts "The game is over if you lose all your rubies"
+  end
+
+  def self.rule_message
+    puts "The Ruby offers the 'punto banco' variant of baccarat"
+    puts TTY::Link.link_to("Refer to the wiki page for full details on the rules", "https://en.wikipedia.org/wiki/Baccarat")
   end
 end
