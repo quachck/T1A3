@@ -87,6 +87,62 @@ It's a card game so the user will expect to see some cards at a minimum, the app
 
 ![trello_gui_feature](screen_shots/trello_gui_feature.PNG "trello_gui_feature") 
 
+## Testing
+Majority of the application's methods have been tested (47 tests) to ensure it functions as expected and is open to any future updates. Refer to the `spec` folder to see the full suite of tests.
+
+**Testing the betting feature**
+
+The `update_player_bet` method asks what user wants to bet on, how much they want to bet and then stores that information in the player's `bet` attribute for later usage.
+
+**Case 1:**
+
+Assuming the user has sufficient funds, the test 'mocks' the user input and tests if the method correctly stores the bet information. 
+
+**Case 2:**
+
+Assuming the user doesn't have sufficient funds, the test expects the method to raise an `InsufficientFundError` . 
+
+```rb
+  describe '#update_player_bet' do
+    it 'returns correctly stores bet info' do
+      game.player = Player.new("David")
+      allow(game).to receive(:ask_bet_amount).and_return('1000')
+      allow(game).to receive(:ask_what_bet).and_return(:player)
+      game.update_player_bet
+      expect(player.bet).to eq([{ player: 1000 }])
+    end
+    it 'raises an error if insufficient funds' do
+      game.player = Player.new("David")
+      allow(game).to receive(:ask_bet_amount).and_return('1001')
+      expect { game.update_player_bet }.to raise_error(InsufficientFundError)
+    end
+  end
+```
+
+**Testing the load feature**
+
+The `load_profile` method takes a player object as an argument and attempts to load it if it exists.
+
+**Case 1:**
+
+Assuming that the profile the user wants to load exists, it tests that the method is able to locate, deserialize and load the profile. 
+
+**Case 2:**
+
+Assuming that the profile the user wants to load does not exist, the test expects the method to raise a `NoFileError`.
+
+```rb
+  describe '#load_profile' do
+    it 'loads an existing file if it exists' do
+      player = Player.new("test")
+      allow(Player).to receive(:from_yaml).with(File.open("save_files/#{player.name.downcase}.yaml", 'r'))
+    end
+    it "raises NoFileError if file doesnt exist" do
+      player = Player.new("non_existent_player")
+      expect { game.load_profile(player) }.to raise_error(NoFileError)
+    end
+  end
+```
 
 ## Style Guide
 The application conforms to [The Ruby Style Guide](https://github.com/quachck/DavidQuach_T1A2).
