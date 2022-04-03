@@ -267,7 +267,9 @@ class Game
   end
 
   def inject_rubies
-    player.balance += 500 if bankrupt?
-    puts Rainbow("Looks like you've lost all your rubies #{player.name}, here's another Λ500 on the house!").forestgreen
+    if bankrupt?
+      player.balance += 500
+      puts Rainbow("Looks like you've lost all your rubies #{player.name}, here's another Λ500 on the house!").forestgreen
+    end
   end
 end
