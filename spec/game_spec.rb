@@ -1,6 +1,20 @@
 require './lib/game'
 require './lib/player'
 
+# Tests for all methods and cases in the baccarat game logic.
+# i.e. drawing the correct amount of cards, calculating the correct score,
+# and applying all the rules from the wiki page
+
+# Betting Feature:
+# Tests that bets are stored correctly
+# Tests that winnings are paid out correctly
+# Tests that results are correct
+
+# Save/load feature:
+# Tests that correct player is loaded
+# Tests that exceptions are raised when attempting to load a player
+# that doesnt exist or starting a file that already exists
+
 describe Game do
   subject(:game) { Game.new }
   subject(:punto) { game.punto }
