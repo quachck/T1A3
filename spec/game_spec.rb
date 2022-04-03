@@ -233,8 +233,8 @@ describe Game do
   describe '#player_win_amount' do
     it 'returns player win amount' do
       game.player = Player.new("David")
-      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 2000 }]
-      expect(game.player_win_amount).to eq(2000)
+      player.bet = [{ tie: 500, lose: 500 }, { banker: 1000, win: 1000 }]
+      expect(game.player_win_amount).to eq(1000)
     end
   end
 
@@ -243,10 +243,10 @@ describe Game do
       punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
       banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
       game.player = Player.new("David")
-      player.bet = [{ tie: 500, lose: 500 }, { player: 1000, win: 2000 }]
+      player.bet = [{ tie: 500, lose: 500 }, { player: 1000, win: 1000 }]
       game.update_player_balance
-      expect(player.balance).to eq(3000)
-      expect(game.player_bet_info[:win]).to eq(2000)
+      expect(player.balance).to eq(2000)
+      expect(game.player_bet_info[:win]).to eq(1000)
     end
     it 'decreases balance when player loses' do
       punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
@@ -274,14 +274,6 @@ describe Game do
     it "raises ExistingFileError if file exists" do
       player = Player.new("test")
       expect { game.set_player(player, true) }.to raise_error(ExistingFileError)
-    end
-  end
-
-  describe '#record_history' do
-    it 'adds the result to the start of the history array' do
-      punto.hand.push(Card.new(1, :spades), Card.new(8, :spades))
-      banko.hand.push(Card.new(1, :spades), Card.new(5, :spades))
-      expect(game.record_history).to eq(['P'])
     end
   end
 end

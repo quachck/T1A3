@@ -14,6 +14,8 @@ What good is winning rubies if you're not able to keep them, users will be able 
 It's a card game so the user will expect to see some cards at a minimum, the application features a graphical user interface similar to those seen at sports clubs. It will display critical information such as user balance and bets and game results and statistics, resulting in a visually pleasing experience.
 
 ### Implementation Plan
+#### Betting feature
+
 
 
 
