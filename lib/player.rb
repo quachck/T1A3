@@ -15,6 +15,6 @@ class Player
   end
 
   def self.from_yaml(yaml_file)
-    YAML.load(yaml_file)
+    YAML.load(yaml_file, permitted_classes: [Player])
   end
 end
