@@ -7,18 +7,39 @@ Aptly named, "The Ruby" is casino application run via the terminal, it features 
 - Upon launching the application, the user can either start a new profile or load an existing profile.
 - The user will be granted Λ1000 (rubies), the currency of the The Ruby.
 - Once the profile is loaded, they're presented with 4 options, `bet`, `display balance`, `save progress and return to main menu` and `save progress and quit`.
-- The user wished to bet, they'll be prompted to enter what they want to bet on - `player`, `banker` or `tie` and how much they want to bet.
+- If the user wishes to bet, they'll be prompted to enter what they want to bet on - `player`, `banker` or `tie` and how much they want to bet.
 - The user can only enter whole units of rubies i.e. `13` and not `13.1`.
 - The round will then play and the relevant information will be displayed on the GUI.
-- The result history is colour coded to keep track of the user's results and any occuring streaks.
+- The result history is colour coded to keep track of the user's results and any occurring streaks.
 - The user can play as much as they want and leave and rejoin at any point without losing their progress.
 - If the user reaches Λ0, the game will add Λ500 to their account.
 
 ![app_ss](screen_shots/app_ss.PNG "app_ss") 
 
+## What The Application Is Made Of
+**Modules**
 
-## Style Guide
-The application conforms to [The Ruby Style Guide](https://github.com/quachck/DavidQuach_T1A2).
+- Display module to handle all user input and display messages.
+- BaccaratRules module to store game logic and odds.
+- BaccaratGUI to draw the GUI.
+
+**Game logic**
+
+**The deck of cards:**
+
+The `Deck` and `Card` classes are core parts of baccarat and used to help with the game logic.
+
+**The dealers:**
+
+The `Dealer` class represents the `punto` (player) and the `banko` (banker).
+
+**The player**
+
+The `Player` class represents the user.
+
+**The game**
+
+The `Game` class is the most important class, it deals with running most of the application and the game logic.
 
 ## Features
 ### Betting functionality
@@ -65,6 +86,10 @@ It's a card game so the user will expect to see some cards at a minimum, the app
 
 
 ![trello_gui_feature](screen_shots/trello_gui_feature.PNG "trello_gui_feature") 
+
+
+## Style Guide
+The application conforms to [The Ruby Style Guide](https://github.com/quachck/DavidQuach_T1A2).
 
 ## Help Documentation
 ### How to install application
