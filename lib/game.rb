@@ -23,11 +23,6 @@ class Game
     @history = []
   end
 
-  # currency of the game, 'ruby'
-  def r
-    "\u039B"
-  end
-
   def start_menu
     case display_startup_options
     when 'Start new profile'
@@ -57,9 +52,10 @@ class Game
       end
       play_round
       update_player_balance
+      inject_rubies
       game_menu
     when 'Show balance'
-      puts Rainbow("Your current balance is #{r}#{player.balance}").blue
+      puts Rainbow("Your current balance is Λ#{player.balance}").gold
       game_menu
     when 'Save progress and return to main menu'
       save_profile(player)
@@ -215,9 +211,9 @@ class Game
   # formatted player result to help with GUI
   def player_result_formatted
     if player_result
-      "#{Rainbow("CONGRATS YOU WIN #{r}#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: #{r}#{player.balance + player_win_amount}").gold}"
+      "#{Rainbow("CONGRATS YOU WIN Λ#{player_win_amount}!\n").green}#{Rainbow("NEW BALANCE: Λ#{player.balance + player_win_amount}").gold}"
     else
-      "#{Rainbow("SORRY YOU LOSE #{r}#{player_bet_amount}\n").red}#{Rainbow("NEW BALANCE: #{r}#{player.balance - player_bet_amount}").gold}"
+      "#{Rainbow("SORRY YOU LOSE Λ#{player_bet_amount}\n").red}#{Rainbow("NEW BALANCE: Λ#{player.balance - player_bet_amount}").gold}"
     end
   end
 
@@ -263,5 +259,15 @@ class Game
     f = File.open("save_files/#{player.name.downcase}.yaml", 'w')
     f.puts player.to_yaml
     f.close
+  end
+
+  # give player Λ500 if they reach Λ0
+  def bankrupt?
+    player.balance.zero?
+  end
+
+  def inject_rubies
+    player.balance += 500 if bankrupt?
+    puts Rainbow("Looks like you've lost all your rubies #{player.name}, here's another Λ500 on the house!").forestgreen
   end
 end

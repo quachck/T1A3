@@ -18,7 +18,7 @@ module BaccaratGUI
       width: dimensions[0],
       height: dimensions[1],
       border: :thick,
-      title: { top_center: Rainbow("\u039B WELCOME TO THE RUBY \u039B").darkred, bottom_right: 'v(1.0)' }
+      title: { top_center: Rainbow("Λ WELCOME TO THE RUBY Λ").darkred, bottom_right: 'v(1.0)' }
     )
   end
 
@@ -43,7 +43,7 @@ module BaccaratGUI
     draw_text([16, 4], "PLAYER#{' ' * 35}BANKER", false, :left, [50, 3])
     draw_text([31, 7], "#{results[0]}  #{result.to_s.upcase}!  #{results[1]}", false, :center, [20, 3])
     draw_text([2, 10], "PLAYER PAYS 1:1\nBANKER PAYS 1:1\nTIE PAYS 8:1", true, :left, [25, 5])
-    draw_text([28, 10], "#{Rainbow("BALANCE: \u039B#{balance}\n").gold}#{Rainbow("BET: \u039B#{bet_info[1]} ON #{bet_info[0].upcase}").blue}", true, :center, [25, 5])
+    draw_text([28, 10], "#{Rainbow("BALANCE: Λ#{balance}\n").gold}#{Rainbow("BET: Λ#{bet_info[1]} ON #{bet_info[0].upcase}").blue}", true, :center, [25, 5])
     draw_text([54, 10], "HISTORY:\n#{dealer_info[2].join(' ')}", true, :left, [25, 5])
     draw_text([25, 17], player_result, false, :center, [30, 5])
     draw_text([2, 15], "CARDS LEFT IN SHOE:\n#{card_count}", true, :left, [25, 5])

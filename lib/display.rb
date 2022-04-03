@@ -57,7 +57,7 @@ module Display
     puts "You will begin with 1000 rubies"
     puts "You can only bet whole units of rubies"
     puts "You can leave and join at anytime without losing your progress"
-    puts "The game is over if you lose all your rubies"
+    puts "The game is over if you lose all your rubies\nGood luck!"
   end
 
   def self.rule_message
