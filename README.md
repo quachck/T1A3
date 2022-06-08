@@ -1,4 +1,4 @@
-# T1A3 - TERMINAL APPLICATION - [REPO](https://github.com/quachck/T1A3)
+# T1A3 - TERMINAL APPLICATION - [REPO](https://github.com/quachck/T1A3) - [REPLIT](https://replit.com/@kwach/The-Ruby#main.rb)
 
 ## The Ruby
 Aptly named, "The Ruby" is casino application run via the terminal, it features the "punto banko" variation of baccarat, a wildly popular card game played at casinos. Other games may be added at a future time.
