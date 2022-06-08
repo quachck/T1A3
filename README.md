@@ -173,7 +173,6 @@ The application can be run with 3 command line arguments
 - `./run_main.sh -i` will display information about the application.
 - `./run_main.sh -r` will display rules about the application.
 
-
 ## References
 *The Ruby Style Guide.* (n.d.). Retrieved April 3, 2022, from https://rubystyle.guide/ 
 
